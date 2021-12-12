@@ -3,6 +3,8 @@ let computerChoice = 0;
 let playerChoice = 0;
 let playerScore = 0;
 let computerScore = 0;
+let message = "aahh im not changed!";
+let OverallScore = playerScore + " " + computerScore;
 
 
 
@@ -34,72 +36,148 @@ function askPlayer(playerSelection) {
 }
 
 function singleRound (playerChoice , computerChoice) {
+    console.log(playerChoice + '  ' + computerChoice);
     if (playerChoice === computerChoice) {
         //if the player and the computer choose the same neither wins
-        console.log("It's a tie! " + playerChoiceText + " doesn\'t beat " + playerChoiceText);
+        //console.log("It's a tie! " + playerChoiceText + " doesn\'t beat " + playerChoiceText);
+        message = "it's a tie!";
     }
     else if (computerChoice === 0 && playerChoice === 2) {
         //if the computer chooses rock and player scissors the computer wins
-        console.log("Computer wins! rock beats scissors!");
+        message = "Computer wins! rock beats scissors!";
         computerScore = ++computerScore;
     } 
     else if (computerChoice === 1 && playerChoice === 0) {
         //if computer chooses paper and the player rock the computer wins
-        console.log("Computer wins! paper beats rock!");
+        message = "Computer wins! paper beats rock!";
         computerScore = ++computerScore;
     }
     else if (computerChoice === 2 && playerChoice === 1) {
         //if computer chooses scissors and the player paper the computer wins
-        console.log("Computer wins! scissors beat paper!");
+        message = "Computer wins! scissors beat paper!";
         computerScore = ++computerScore;
     }
     else if (playerChoice === 0 && computerChoice === 2) {
         //if player chooses rock and the computer scissors the player wins
-        console.log("Player wins! rock beats scissors!");
+        message = "Player wins! rock beats scissors!";
         playerScore = ++playerScore;
     }
     else if (playerChoice === 1 && computerChoice === 0) {
         //if player chooses paper and the computer rock the player wins
-        console.log("Player wins! paper beats rock!")
+        message = "Player wins! paper beats rock!";
         playerScore = ++playerScore;
     }
     else if (playerChoice === 2 && computerChoice === 1) {
         //if player chooses scissors and the computer paper the player wins
-        console.log("Player wins! scissors beat paper!")
+        message = "Player wins! scissors beat paper!";
         playerScore = ++playerScore;
     }
     else {
         console.log("WTF");
+
+    
     };
 }
 
-function game() {
+//function game() {
     
-    computerPlay();
-    askPlayer(playerChoiceText);
-    singleRound(playerChoice, computerChoice);
-    console.log("Player score: " + playerScore);
-    console.log("Computer score: " + computerScore);
-};
+ //   computerPlay();
+ //   askPlayer(playerChoiceText);
+ //   singleRound(playerChoice, computerChoice);
+//    console.log("Player score: " + playerScore);
+  //  console.log("Computer score: " + computerScore);
+//};
 
-for (let i =1 ;i <= 5; ++i) {
-    console.log('------------------');
-    playerChoiceText = prompt("Please choose: rock, paper or scissors", 'paper');
-    playerChoiceText = playerChoiceText.toLowerCase();
-    console.log("Round number: " + i);
-    game();
-    console.log('------------------');
-};
+//for (let i =1 ;i <= 5; ++i) {
+//    console.log('------------------');
+//    playerChoiceText = prompt("Please choose: rock, paper or scissors", 'paper');
+//    playerChoiceText = playerChoiceText.toLowerCase();
+//    console.log("Round number: " + i);
+//    game();
+//    console.log('------------------');
+//};
+//the part that plays the game five times
 
-let message = "aahh im not changed!";
 
-if (playerScore < computerScore) {
+//set div text show the score
+const divRef = document.getElementById("message")
+divRef.textContent = "Div";
+
+const scoreRef = document.getElementById("Score")
+scoreRef.textContent = OverallScore;
+
+
+
+function SetScoreDisplay () {
+    if (playerScore < computerScore) {
     message = "computer wins!";
-}
-else if (playerScore > computerScore) {
+    OverallScore = playerScore + " " + computerScore;
+    scoreRef.textContent = OverallScore;
+    }
+    else if (playerScore > computerScore) {
     message = "player wins!";
-}
-else {
+    OverallScore = playerScore + " " + computerScore;
+    scoreRef.textContent = OverallScore;
+    }
+    else {
     message = "I hate edge cases, It's a tie >:-(";
-}
-console.log(message);
+    OverallScore = playerScore + " " + computerScore;
+    scoreRef.textContent = OverallScore;
+    }
+    //console.log(message);
+
+    scoreRef.textContent = OverallScore;
+};
+
+function checkScore () {
+    if (playerScore >= 5 || computerScore >= 5){
+        scoreRef.textContent = message;
+    }
+        return
+};
+
+
+
+
+// Makes a ref and add listener to buttons
+// also the reaon it didnt work was single round was getting computer choice without letting the computer play so it was always zero
+
+const btnRock = document.querySelector("#Rock");
+btnRock.addEventListener('click', () => {
+    computerPlay();
+    singleRound(0, computerChoice);
+    divRef.textContent = message;
+    SetScoreDisplay();
+    checkScore();
+});
+
+const btnPaper = document.querySelector('#Paper');
+btnPaper.addEventListener('click', () => {
+    computerPlay();
+    singleRound(1, computerChoice);
+    divRef.textContent = message;
+    SetScoreDisplay();
+    checkScore();
+});
+
+const btnScissors = document.querySelector('#Scissors');
+btnScissors.addEventListener('click', () => {
+    computerPlay();
+    singleRound(2, computerChoice);
+    divRef.textContent = message;
+    SetScoreDisplay();
+    checkScore();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
